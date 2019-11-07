@@ -81,6 +81,7 @@ class Solution:
 >> The idea is: if the maxSubarray of first i-1 elements is positive, then we can add that value to nums[i]. Otherwise, we set it to 0.
 >> And we don't need all the maxSubarray(nums,i). What we need is just maxSubarray(nums,i-1) so as we can do the comparison.
 >> If we meet DP problem, the first problem comes out to our mind should be: what's the statement of the sub-problem, whose format should satisfy that if we've solved a sub-problem, it would be helpful for solving the next-step sub-problem, and, thus, eventually helpful for solving the original problem.
+
 > **Complexity Analysis**  
 >> - Time complexity : O(N). 
 >> - Space complexity : O(1).
