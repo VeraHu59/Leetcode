@@ -6,6 +6,15 @@ Here is the list of questions which use the knowledge of Array.
 - [53 Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)
 - [26 Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
 - [66 Plus One](https://leetcode.com/problems/plus-one/)
+- [88 Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)
+- [118 Pascal's Triangle](https://leetcode.com/problems/pascals-triangle/)
+- [122. Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
+- [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+- [169 Majority Element](https://leetcode.com/problems/majority-element/)
+- [189 Rotate Array](https://leetcode.com/problems/rotate-array/)
+- [217 Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)
+- [268 Missing Number](https://leetcode.com/problems/missing-number/)
+- [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/solution/)
 
 # Solutions
 
@@ -223,4 +232,268 @@ class Solution:
                 return digits
             digits[~i] = 0
         return [1] + [0] * len(digits) 
+```
+
+## 88. Merge Sorted Array (Easy)
+
+- **Link:** https://leetcode.com/problems/merge-sorted-array/
+
+### Solution
+> **Explanation**
+>> It is quite simple if we use sort() function. But if we don't want to use sort(), we can use the idea of two pointers. Compare the elements nums1[i] and nums2[j] and put the smaller one into array (forward). We can also do this backward, in that case we put the larger one into the array.
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N). 
+>> - Space complexity : O(1).
+
+```python 
+def merge(self, nums1, m, nums2, n):
+        k = m+n-1
+        
+        while(n>0):
+            if m <= 0 or nums1[m-1] <= nums2[n-1]:
+                nums1[k] = nums2[n-1]
+                n -= 1
+                k -=1
+            else:
+                nums1[k] = nums1[m-1]
+                m -= 1
+                k -=1
+```
+
+## 118. Pascal's Triangle (Easy)
+
+- **Link:** https://leetcode.com/problems/pascals-triangle/
+
+### Solution 1: Dynamic Programming
+> **Explanation**
+>>  Any row can be constructed using the offset sum of the previous row.(from [sherlock321](https://leetcode.com/problems/pascals-triangle/discuss/38128/Python-4-lines-short-solution-using-map.))
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N), where N is the numRows.
+>> - Space complexity : O(N), where N is the numRows.
+
+```python 
+def generate(self, numRows):
+        res = [[1]]
+        for i in range(1, numRows):
+            # Any row can be constructed using the offset sum of the previous row.
+            # map(function, iterable)
+            res += [list(map(lambda x, y: x+y, res[-1] + [0], [0] + res[-1]))]
+            # use lambda function, list1+list2 equals to sum(list1,list2), but not extend
+        return res[:numRows]
+```
+
+### Solution 2:
+> **Explanation**
+>> Although the algorithm is very simple, the iterative approach to constructing Pascal's triangle can be classified as dynamic programming because we construct each row based on the previous row.
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N). 
+>> - Space complexity : O(N).
+
+```python 
+def generate(self, numRows):
+        res = [[1]]
+        for i in range(1, numRows):
+            # Any row can be constructed using the offset sum of the previous row.
+            # map(function, iterable)
+            res += [list(map(lambda x, y: x+y, res[-1] + [0], [0] + res[-1]))]
+            # use lambda function, list1+list2 equals to sum(list1,list2), but not extend
+        return res[:numRows]
+```
+
+# 122. Best Time to Buy and Sell Stock II (Easy)
+
+- **Link:** https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
+
+### Solution
+> **Explanation**
+>>  The simple idea is that if the stock price is going to decrease tomorrow, we will sell it today until it is going to increase.
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(1).
+
+```python
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        max_profit = 0
+        for i in range(1,len(prices)):
+            daily_profit = prices[i]-prices[i-1]
+            if daily_profit>0:
+                max_profit += daily_profit
+        
+        return max_profit
+```
+
+# 121. Best Time to Buy and Sell Stock (Easy)
+
+- **Link:** https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+
+### Solution
+> **Explanation**
+>> We need to find out the maximum difference (which will be the maximum profit) between two numbers in the given array.
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(1).
+
+```python
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        # Pay attention to special cases
+        if len(prices)<=1:
+            return 0
+        min_price = prices[0]
+        max_profit = 0
+        for price in prices:
+            min_price = min(min_price,price)
+            max_profit = max(max_profit, price - min_price)
+        
+        return max_profit
+```
+
+# 169. Majority Element (Easy)
+
+- **Link:** https://leetcode.com/problems/majority-element/
+
+### Solution 1: Sort
+
+> **Complexity Analysis**  
+>> - Time complexity : O(NlogN).
+>> - Space complexity : O(1).
+
+```python
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        nums.sort()
+        return nums[len(nums)//2]
+```
+
+### Solution 2: Hash
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(N).
+
+```python
+class Solution:
+    def majorityElement(self, nums):
+        # A counter is a container that stores elements as dictionary keys, and their counts are stored as dictionary value
+        # Counter is a subclass of dictionary
+        counts = collections.Counter(nums)
+        # max(iterable, key): key is optional and comparison is performed based on its return value
+        # dict.get: get the value for the specified key if key is in dictionary.
+        return max(counts.keys(), key=counts.get)
+```
+
+# 217. Contains Duplicate (Easy)
+
+- **Link:** https://leetcode.com/problems/contains-duplicate/
+
+### Solution 1: Set
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(N).
+
+```python
+class Solution(object):
+    def containsDuplicate(self, nums):
+        return len(nums) != len(set(nums)) 
+```
+
+> We can see set is useful when we deal with array problems. In python, set is similar with dictionary.
+
+
+### Solution 2: Hash
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(N).
+
+```python
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        counts = collections.Counter(nums)
+        for count in counts.values():
+            if count>1:
+                return True
+        return False
+```
+
+# 268. Missing Number (Easy)
+
+- **Link:** https://leetcode.com/problems/missing-number/
+
+### Solution 1: Hash Set
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(N).
+
+```python
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        nums_set = set(nums)
+        n = len(nums) + 1
+        for i in range(n):
+            # the time complexity of find in set is O(1), the worst case is O(n)
+            # the time complexity of find in list is O(n)
+            if i not in nums_set:
+                return i
+```
+
+
+### Solution 2: Gauss Formula
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(N).
+
+```python
+class Solution:
+    def missingNumber(self, nums):
+        # calculate the expected sum
+        expected_sum = len(nums)*(len(nums)+1)//2 # O(1)
+        actual_sum = sum(nums) # O(n)
+        return expected_sum - actual_sum
+```
+
+
+### Solution 3: Bit Manipulation
+
+> **Explanation**
+>> For value appears in the list, we can find a match of value-index, where value == index. Then we know that a^a=0, 0^a=a. Therefore, we will be left with the missing number. 
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(1).
+
+```python
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        missing = len(nums)
+        for i,num in enumerate(nums):
+            missing ^= i^num
+        
+        return missing
+```
+
+# 283. Move Zeroes (Easy)
+
+- **Link:** https://leetcode.com/problems/move-zeroes/
+
+### Solution 
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(1).
+
+```python
+class Solution:
+    def moveZeroes(self, nums):
+        # we need to start iteration from the last element, otherwise, we will pop the 0 we add.
+        for i in range(len(nums))[::-1]:
+            if nums[i] == 0:
+                nums.pop(i)
+                nums.append(0)
 ```
