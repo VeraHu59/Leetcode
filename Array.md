@@ -14,7 +14,9 @@ Here is the list of questions which use the knowledge of Array.
 - [189 Rotate Array](https://leetcode.com/problems/rotate-array/)
 - [217 Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)
 - [268 Missing Number](https://leetcode.com/problems/missing-number/)
-- [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/solution/)
+- [283 Move Zeroes](https://leetcode.com/problems/move-zeroes/solution/)
+- [78 Subsets](https://leetcode.com/problems/subsets/)
+- [238 Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)
 
 # Solutions
 
@@ -497,3 +499,91 @@ class Solution:
                 nums.pop(i)
                 nums.append(0)
 ```
+
+# 78. Subsets (Median)
+
+- **Link:** https://leetcode.com/problems/subsets/
+
+### Solution 1: Breadth-First-Search
+> **Explanation**
+>> While iterating through all numbers, for each new number, we can either pick it or not pick it
+>> 1. if pick, just add current number to every existing subset.
+>> 2. if not pick, just leave all existing subsets as they are.
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N^2).
+>> - Space complexity : O(N).
+
+```python
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = [[]]
+        for num in nums:
+            res+=[item+[num] for item in res]
+        return res
+```
+
+
+### Solution 2: Depth-First-Search
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N^2).
+>> - Space complexity : O(N).
+
+```python
+class Solution(object):
+    def dfs(self, nums,index,path,res):
+        res.append(path)
+        for i in range(index,len(nums)):
+            # we cannot add int to list, so nums[i] -> [nums[i]]
+            self.dfs(nums,i+1,path+[nums[i]],res)
+            
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        self.dfs(nums,0,[],res)
+        # the list is changable object, so when we use list as a parameter, it can be changed through the process
+        return res
+```
+
+# 238. Product of Array Except Self (Median)
+
+- **Link:** https://leetcode.com/problems/product-of-array-except-self/
+
+### Solution
+> **Explanation**
+>> The simplest the idea is first calculate the product of whole array and divide by each element itself. If we don't use division operation, we can make use of the product of all the numbers to the left and all the numbers to the right of the index. Multiplying these two individual products would give us the desired result as well.
+
+> **Complexity Analysis**  
+>> - Time complexity : O(N).
+>> - Space complexity : O(N).
+
+```python
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n = len(nums)
+        l, r, res = [0]*n,[0]*n,[0]*n
+        l[0] = 1
+        for i in range(1,n):
+            l[i]=l[i-1]*nums[i-1]
+        
+        r[n-1] = 1
+        for i in range(n-2,-1,-1):
+            r[i] = r[i+1]*nums[i+1]
+        
+        for i in range(n):
+            res[i] = l[i]*r[i]
+        return res
+```
+
