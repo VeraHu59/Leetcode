@@ -12,4 +12,4 @@ The solution for each question contains three parts:
 I hope this file can track my journey of learning data structure and algorithm. Moreover, I hope this file can help those who are struggling with Leetcode as I do.
 
 
-I will keep updating this document.
+I will keep updating this file.
