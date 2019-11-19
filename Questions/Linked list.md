@@ -2,7 +2,7 @@
 
 Here is the list of questions which use the knowledge of linked list.
 
-- [138 Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/)\
+- [138 Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/)
 - [160 Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/)
 - [206 Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)
 - [234. Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/)
