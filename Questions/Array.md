@@ -296,14 +296,12 @@ def generate(self, numRows):
 >> - Space complexity : O(N).
 
 ```python 
-def generate(self, numRows):
-        res = [[1]]
-        for i in range(1, numRows):
-            # Any row can be constructed using the offset sum of the previous row.
-            # map(function, iterable)
-            res += [list(map(lambda x, y: x+y, res[-1] + [0], [0] + res[-1]))]
-            # use lambda function, list1+list2 equals to sum(list1,list2), but not extend
-        return res[:numRows]
+def generate(numRows):
+    pascal = [[1]*(i+1) for i in range(numRows)]
+    for i in range(numRows):
+        for j in range(1,i):
+            pascal[i][j] = pascal[i-1][j-1] + pascal[i-1][j]
+    return pascal
 ```
 
 # 122. Best Time to Buy and Sell Stock II (Easy)
