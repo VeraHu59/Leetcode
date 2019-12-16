@@ -483,15 +483,22 @@ class Solution:
 
 ```python
 class Solution:
-    def countPrimes(self, n: int) -> int:
-        if n<3:
-            return 0
-        prime = [1]*n
-        prime[0], prime[1] = 0, 0
-        # all multiples of i cannot be prime
-        # list[start:end:step]
-        for i in range(2, int(n**(1/2)+1)):  # this loop will run sqrt(n)-1 times
-            prime[i*i:n:i] = [0]*len(prime[i*i:n:i]) # (sqrt(n)-1)*logn
+    def firstUniqChar(self, s: str) -> int:
+        list = []
+        for str in s:
+            list += [str]
+            
+        h = collections.Counter(list)
+                
+        res = []
+        for key, value in h.items():
+            if value == 1:
+                res+= [key]
         
-        return sum(prime)
+        if len(res) == 0:
+            return -1
+        else:
+            for i, l in enumerate(list):
+                if l in res:
+                    return i
 ```
