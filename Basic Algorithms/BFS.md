@@ -55,7 +55,45 @@ class Solution(object):
 - **Link:** https://www.lintcode.com/problem/serialize-and-deserialize-binary-tree/description
 
 Serialization means transfer object into string. Deserialization means transfer string to object.
+```python
+# BST Serialization and Deserialization
+class Codec:
+    def serialize(self, root):
+        if not root:
+            return ''
+        queue = [root]
+        res = []
+        while queue:
+        	node = queue.pop(0)
+        	if node:
+        		# this is not the same with normal BST
+        		# we need to push the null into queue 
+        		queue.append(node.left)
+        		queue.append(node.right)
+        	res.append(str(node.val) if node else '#')
+        return ','.join(res)
 
+                
+    
+    def deserialize (self, data):
+    	if not data:
+    		return None
+    	data = data.split(',')
+    	root = TreeNode(int(data[0]))
+    	queue = [root]
+        index = 1
+    	while queue:
+    		node = queue.pop(0)
+    		if data[index] != '#':
+    			node.left = TreeNode(int(data[index]))
+    			queue.append(node.left)
+    		index += 1
+    		if data[index+1] != '#':
+    			node.right = TreeNode(int(data[index+1]))
+    			queue.append(node.right)
+    		index += 1
+    	return root
+```
 
 ### Graph Valid Tree
 Two conditions: (1) N nodes, N-1 edges (2) Every node is connected with each other (Connected component)
