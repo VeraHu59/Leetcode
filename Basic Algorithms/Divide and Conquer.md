@@ -98,7 +98,7 @@ class Solution(object):
 ### 94. Binary Tree Inorder Traversal
 **Link**:https://leetcode.com/problems/binary-tree-inorder-traversal/
 
-Iteration
+1. Iteration
 
 ```python
 class Solution(object):
@@ -122,7 +122,7 @@ class Solution(object):
         return res
 ```
 
-Recursion
+2. Recursion
 
 ```python
 class Solution(object):
@@ -142,8 +142,36 @@ class Solution(object):
             self.helper(root.right, result)
 ```
 
+### 110. Balanced Binary Tree
+**Link**: https://leetcode.com/problems/balanced-binary-tree/
+
+```python
+class Solution(object):
+    def isBalanced(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        isBalanced, height = self.helper(root)
+        return isBalanced
+    
+    def helper(self, root):
+        if not root:
+            return True, 0
+        isLeft, left_height = self.helper(root.left)
+        isRight, right_height = self.helper(root.right)
+        
+        if not isLeft or not isRight:
+            return False, None
+        if left_height - right_height > 1 or left_height - right_height < -1:
+            return False, None
+        
+        return True, max(left_height, right_height)+1
+    
+```
+
 ### 257. Binary Tree Paths
-**Lind**: https://leetcode.com/problems/binary-tree-paths/
+**Link**: https://leetcode.com/problems/binary-tree-paths/
 
 ```python
 class Solution(object):
